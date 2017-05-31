@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.six import python_2_unicode_compatible
-# Create your models here.
+from django.urls import reverse
 
 # python_2_unicode_compatible 装饰器用于兼容 Python2
 @python_2_unicode_compatible
@@ -68,6 +68,13 @@ class Post(models.Model):
     author = models.ForeignKey(User)
     def __str__(self):
         return self.title
+
+        # 自定义 get_absolute_url 方法
+        # 记得从 django.urls 中导入 reverse 函数
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={'pk': self.pk})
+
+
 
 #在终端中输入：python manage.py makemigrations
 # python manage.py migrate
